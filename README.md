@@ -1,2 +1,48 @@
-# Assignment-1-Store-Manager
-Page-level storage manager in C for CS525 – Advanced Database Organization. Built by Harsh Kanakhara (A20642254) and Kevin Mevada (A20639598) . Supports creation, read/write, and expansion of 4096-byte paged files.
+# Advanced Database Organization – CS525
+
+**Programming Assignment 1: Storage Manager**
+**Author:** [Harsh Kanakhara A20642254],[Kevin Mevada A20639598]
+**Submission Date:** September 7, 2025
+
+## Project Overview
+
+This project implements a basic storage manager that supports page-oriented file operations for a database system. Each page is fixed at **4096 bytes**. The storage manager provides the ability to create, open, close, delete, and manipulate files at the page level, as described in `storage_mgr.h`.
+
+## Implementation Notes
+
+* **`storage_mgr.c`**
+
+  * Provides the main functionality of the storage manager.
+  * The `SM_FileHandle.mgmtInfo` field holds a `FileCtx` structure, which wraps a C `FILE*`.
+  * Implemented functions include:
+
+    * **createPageFile** – initialize a new file with one empty page.
+    * **openPageFile / closePageFile** – manage file handles safely.
+    * **readBlock / writeBlock** – read and write individual pages.
+    * **appendEmptyBlock** – extend the file with an additional empty page.
+    * **ensureCapacity** – grow the file until it contains at least a given number of pages.
+  * The number of pages is derived from the file size when opening.
+  * All operations return standardized codes from `dberror.h` to indicate success or failure.
+
+* **Supporting Components**
+
+  * **`storage_mgr.h`**: Defines core types (`SM_FileHandle`, `SM_PageHandle`) and function prototypes.
+  * **`dberror.c` / `dberror.h`**: Provide error code constants and error message handling.
+  * **`test_helper.h`**: Supplies assertion and testing macros.
+  * **`test_assign1_1.c`**: Contains test cases to validate storage manager functions.
+
+* **Memory Handling**
+
+  * Any dynamically allocated memory (buffers, context structures) is released properly to avoid leaks.
+
+* **Testing**
+
+  * All supplied test cases in `test_assign1_1.c` run successfully using this implementation.
+
+## Build & Execution
+
+1. Run `make` to compile the assignment.
+2. Execute `./test_assign1` to run the provided tests.
+3. Use `make clean` to remove generated object files and executables.
+
+---
